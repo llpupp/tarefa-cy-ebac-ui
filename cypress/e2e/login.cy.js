@@ -1,9 +1,19 @@
 /// <reference types="cypress" />
 
+const perfil = require('../fixtures/perfil.json');
+module.exports = {
+    output: {
+      filename: 'login.cy.js',
+    },
+    module: {
+      rules: [{ test: /\.txt$/, use: 'raw-loader' }],
+    },
+  };
+
 describe('Funcionalidade Login', () => {
 
     beforeEach(() => {
-        cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+        cy.visit('minha-conta')
     });
     afterEach(() => {
         cy.screenshot()
@@ -16,6 +26,12 @@ describe('Funcionalidade Login', () => {
         cy.get('.woocommerce-MyAccount-content').should('contain' , 'Olá, aluno_ebac (não é aluno_ebac? Sair)')
         
     })
+    it.only('Deve fazer login com sucesso - Usando arquivo de dados', () => {
+        cy.get('#username').type(perfil.usuario)
+        cy.get('#password').type(perfil.senha)
+        cy.get('.woocommerce-form > .button').click()
+        cy.get('a > .hidden-xs').should('contain' , 'Welcome aluno_ebac')  
+    });
     it('Deve exibir mensagem de erro ao inserir usuário inválido', () => {
         cy.get('#username').type('aluno_ebalc@teste.com')
         cy.get('#password').type('teste@teste.com')
