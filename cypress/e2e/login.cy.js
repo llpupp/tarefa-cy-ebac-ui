@@ -1,14 +1,6 @@
 /// <reference types="cypress" />
 
 const perfil = require('../fixtures/perfil.json');
-module.exports = {
-    output: {
-      filename: 'login.cy.js',
-    },
-    module: {
-      rules: [{ test: /\.txt$/, use: 'raw-loader' }],
-    },
-  };
 
 describe('Funcionalidade Login', () => {
 
